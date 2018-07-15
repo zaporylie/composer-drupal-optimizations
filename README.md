@@ -25,3 +25,8 @@ After:
 ```
 Memory usage: 218.72MB (peak: 250.44MB), time: 4.83s
 ```
+
+# Credits
+
+- Symfony community - idea and development; Special thanks to @nicolas-grekas
+- Jakub Piasecki - port and maintenance
