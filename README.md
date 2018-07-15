@@ -1,5 +1,8 @@
 Optimize Composer for Drupal 8.5+ projects
 ====
+[![Build Status](https://travis-ci.org/zaporylie/composer-drupal-optimizations.svg?branch=master)](https://travis-ci.org/zaporylie/composer-drupal-optimizations)
+![Packagist](https://img.shields.io/packagist/v/zaporylie/composer-drupal-optimizations.svg)
+
 
 # About
 

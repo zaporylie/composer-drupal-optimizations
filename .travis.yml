@@ -1,0 +1,41 @@
+language: php
+dist: trusty
+sudo: false
+
+php:
+  - 5.6
+  - 7.0
+  - 7.1
+  - 7.2
+
+env:
+  matrix:
+    - RELEASE=stable COMPOSER_CHANNEL=stable
+    - RELEASE=dev COMPOSER_CHANNEL=stable
+    - RELEASE=stable COMPOSER_CHANNEL=snapshot
+
+matrix:
+  exclude:
+    - php: 5.6
+      env: RELEASE=dev COMPOSER_CHANNEL=stable
+    - php: 5.6
+      env: RELEASE=stable COMPOSER_CHANNEL=snapshot
+
+before_install:
+  - if [[ $TRAVIS_PHP_VERSION = 5.6 ]]; then export COMPOSER_MEMORY_LIMIT=-1; fi;
+  - composer --verbose self-update --$COMPOSER_CHANNEL
+  - composer --version
+
+install:
+  - composer --verbose validate
+  - composer --verbose install
+
+script:
+  - cd .. && composer create-project drupal-composer/drupal-project:8.x-dev drupal-project --stability dev --no-interaction
+  - ls -lah . && cd drupal-project
+  - if [[ $RELEASE = dev ]]; then composer --verbose require --no-update --dev webflo/drupal-core-require-dev:8.6.x-dev; fi;
+  - if [[ $RELEASE = dev ]]; then composer --verbose require --no-update drupal/core:8.6.x-dev; fi;
+  - if [[ $RELEASE = dev ]]; then composer --verbose update; fi;
+  - composer update nothing --profile
+  - composer config repositories.local path "../composer-drupal-optimizations" && composer require zaporylie/composer-drupal-optimizations:@dev
+  - composer update nothing --profile
