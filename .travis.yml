@@ -36,5 +36,5 @@ script:
   - if [[ $RELEASE = dev ]]; then composer --verbose require --no-update drupal/core:8.6.x-dev webflo/drupal-core-require-dev:8.6.x-dev; fi;
   - if [[ $RELEASE = dev ]]; then composer --verbose update; fi;
   - composer update nothing --profile
-  - composer config repositories.local path "../composer-drupal-optimizations" && composer require zaporylie/composer-drupal-optimizations:dev-master
+  - composer config repositories.local path "../composer-drupal-optimizations" && composer require zaporylie/composer-drupal-optimizations:@dev
   - composer update nothing --profile
