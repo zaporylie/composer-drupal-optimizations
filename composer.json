@@ -14,9 +14,7 @@
     ],
     "require": {
         "composer-plugin-api": "^1.1",
-        "drupal/core": "^8.5",
-        "symfony/console": "^3.4",
-        "symfony/process": "^3.4"
+        "drupal/core": "^8.5"
     },
     "autoload": {
         "psr-4": {
