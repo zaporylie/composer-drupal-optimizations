@@ -23,7 +23,7 @@ class Cache extends BaseCache
         return $content;
     }
 
-    public function removeLegacyTags(array $data): array
+    public function removeLegacyTags(array $data)
     {
       foreach (self::$lowestTags as $package => $lowestVersion) {
             if (!isset($data['packages'][$package][$lowestVersion])) {
