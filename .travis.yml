@@ -32,7 +32,9 @@ install:
 
 script:
   - cd .. && composer create-project drupal-composer/drupal-project:8.x-dev drupal-project --stability dev --no-interaction
-  - ls -lah
-  - cd drupal-project && composer config repositories.local path "../composer-drupal-optimizations" && composer require zaporylie/composer-drupal-optimizations:dev-master
+  - ls -lah . && cd drupal-project
+  - composer update nothing --profile
+  - composer config repositories.local path "../composer-drupal-optimizations" && composer require zaporylie/composer-drupal-optimizations:dev-master
+  - composer update nothing --profile
 #  - if [[ $RELEASE = dev ]]; then composer --verbose require --no-update drupal/core:8.6.x-dev webflo/drupal-core-require-dev:8.6.x-dev; fi;
 #  - if [[ $RELEASE = dev ]]; then composer --verbose update; fi;
