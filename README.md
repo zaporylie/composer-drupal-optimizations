@@ -3,12 +3,14 @@ Optimize Composer for Drupal 8.5+ projects
 
 # About
 
-This composer-plugin contains set of tweaks that makes running composer in your Drupal project
+This composer-plugin contains set of improvements that makes running `composer update` on your Drupal project
 significantly faster.
 
 # Optimizations
 
-- Reduce memory usage and CPU usage by removing legacy symfony tags (see also symfony/flex#378) 
+- Reduce memory usage and CPU usage by removing legacy symfony tags (see also https://github.com/symfony/flex/pull/378) 
+
+(only one at the moment)
 
 # Benchmark
 
