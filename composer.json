@@ -1,0 +1,28 @@
+{
+    "name": "zaporylie/composer-drupal-optimizations",
+    "description": "Composer plugin to improve composer performance for Drupal projects",
+    "type": "composer-plugin",
+    "require-dev": {
+        "composer/composer": "^1.6"
+    },
+    "authors": [
+        {
+            "name": "Jakub Piasecki",
+            "email": "jakub@piaseccy.pl"
+        }
+    ],
+    "require": {
+        "composer-plugin-api": "^1.1",
+        "drupal/core": "^8.5",
+        "symfony/console": "^3.4",
+        "symfony/process": "^3.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "zaporylie\\ComposerDrupalOptimizations\\": "src/"
+        }
+    },
+    "extra": {
+        "class": "zaporylie\\ComposerDrupalOptimizations\\Plugin"
+    }
+}
