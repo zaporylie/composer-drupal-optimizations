@@ -6,6 +6,12 @@ Optimize Composer for Drupal 8.5+ projects
 This composer-plugin contains set of improvements that makes running `composer update` on your Drupal project
 significantly faster.
 
+# Installation
+
+```bash
+composer require zaporylie/composer-drupal-optimizations:^1.0
+```
+
 # Optimizations
 
 - Reduce memory usage and CPU usage by removing legacy symfony tags (see also https://github.com/symfony/flex/pull/378) 
