@@ -2,6 +2,7 @@
     "name": "zaporylie/composer-drupal-optimizations",
     "description": "Composer plugin to improve composer performance for Drupal projects",
     "type": "composer-plugin",
+    "license": "GPL-2.0-or-later",
     "require-dev": {
         "composer/composer": "^1.6"
     },
