@@ -13,6 +13,16 @@ class Plugin implements PluginInterface
 {
     public function activate(Composer $composer, IOInterface $io)
     {
+        // Set lowest-tags from composer.json, 'extra' section.
+        if (($extra = $composer->getPackage()->getExtra()) && isset($extra['lowest-tags'])) {
+            if (is_array($extra['lowest-tags'])) {
+                Config::getInstance()->setLowestTags($extra['lowest-tags']);
+            }
+            elseif ($io->isVerbose()) {
+                $io->writeError('Extra value "lowest-tags" was provided in wrong format - array expected.');
+            }
+        }
+
         $rfs = Factory::createRemoteFilesystem($io, $composer->getConfig());
         $manager = RepositoryFactory::manager($io, $composer->getConfig(), $composer->getEventDispatcher(), $rfs);
         $setRepositories = \Closure::bind(function (RepositoryManager $manager) {

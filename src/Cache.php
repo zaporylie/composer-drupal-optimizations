@@ -10,14 +10,14 @@ use Composer\Cache as BaseCache;
  */
 class Cache extends BaseCache
 {
-    private static $lowestTags = [
-        'symfony/symfony' => 'v3.4.0',
-    ];
 
+    /**
+     * {@inheritdoc}
+     */
     public function read($file)
     {
         $content = parent::read($file);
-        foreach (array_keys(self::$lowestTags) as $key) {
+        foreach (array_keys($this->getLowestTags()) as $key) {
             list($provider, ) = explode('/', $key, 2);
             if (0 === strpos($file, "provider-$provider\$")) {
                 $content = json_encode($this->removeLegacyTags(json_decode($content, true)));
@@ -27,9 +27,15 @@ class Cache extends BaseCache
         return $content;
     }
 
+    /**
+     * Removes legacy tags from $data.
+     *
+     * @param array $data
+     * @return array
+     */
     public function removeLegacyTags(array $data)
     {
-        foreach (self::$lowestTags as $package => $lowestVersion) {
+        foreach ($this->getLowestTags() as $package => $lowestVersion) {
             if (!isset($data['packages'][$package][$lowestVersion])) {
                 continue;
             }
@@ -43,5 +49,15 @@ class Cache extends BaseCache
             break;
         }
         return $data;
+    }
+
+    /**
+     * Gets list of lowest allowed tags.
+     *
+     * @return array
+     */
+    private function getLowestTags()
+    {
+        return Config::getInstance()->getLowestTags();
     }
 }
