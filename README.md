@@ -6,8 +6,7 @@ Optimize Composer for Drupal 8.5+ projects
 
 # About
 
-This composer-plugin contains set of improvements that makes running `composer update` on your Drupal project
-significantly faster.
+This composer-plugin contains set of improvements that makes running heavy duty composer commands (i.e. `composer update` or `composer require`) much faster.
 
 # Installation
 
