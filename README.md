@@ -15,6 +15,8 @@ significantly faster.
 composer require zaporylie/composer-drupal-optimizations:^1.0
 ```
 
+No configuration required 🎊
+
 # Optimizations
 
 - Reduce memory usage and CPU usage by removing legacy symfony tags (see also https://github.com/symfony/flex/pull/378) 
