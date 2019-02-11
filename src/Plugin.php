@@ -28,12 +28,14 @@ class Plugin implements PluginInterface
                 $extra['composer-drupal-optimizations']['legacy'] = [
                     'symfony/symfony' => '<3.4',
                 ];
-                if ($io->isVeryVerbose() || TRUE) {
-                    $io->write('Legacy tags were not explicitly set so the zaporylie/composer-drupal-optimizations did the calculation:');
-                    foreach ($extra['composer-drupal-optimizations']['legacy'] as $package => $version) {
-                        $io->write(sprintf('extra.commerce-drupal-optimizations.legacy.%s: \'%s\'', $package, $version));
-                    }
+                if ($io->isVerbose()) {
+                    $io->write('Legacy tags were not explicitly set so the zaporylie/composer-drupal-optimizations set default based on project\'s composer.json content.');
                 }
+            }
+        }
+        if (!empty($extra['composer-drupal-optimizations']['legacy']) && $io->isVeryVerbose()) {
+            foreach ($extra['composer-drupal-optimizations']['legacy'] as $package => $version) {
+                $io->write(sprintf('extra.commerce-drupal-optimizations.legacy.%s: \'%s\'', $package, $version));
             }
         }
 
