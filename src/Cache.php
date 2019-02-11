@@ -17,16 +17,17 @@ class Cache extends BaseCache
     public function read($file)
     {
         $content = parent::read($file);
-        if ($content) {
-            foreach (array_keys(self::$lowestTags) as $key) {
-                list($provider, ) = explode('/', $key, 2);
-                if (0 === strpos($file, "provider-$provider\$")) {
-                    $content = json_encode($this->removeLegacyTags(json_decode($content, true)));
-                    break;
-                }
+        if (!\is_array($data = json_decode($content, true))) {
+            return $content;
+        }
+        foreach (array_keys(self::$lowestTags) as $key) {
+            list($provider, ) = explode('/', $key, 2);
+            if (0 === strpos($file, "provider-$provider\$")) {
+                $data = $this->removeLegacyTags($data);
+                break;
             }
         }
-        return $content;
+        return json_encode($data);
     }
 
     public function removeLegacyTags(array $data)
