@@ -40,3 +40,6 @@ script:
   - composer update nothing --profile
   - composer config repositories.local path "../composer-drupal-optimizations" && composer require zaporylie/composer-drupal-optimizations:@dev
   - composer update nothing --profile
+  - cd ../composer-drupal-optimizations
+  - composer install
+  - ./vendor/bin/phpunit
