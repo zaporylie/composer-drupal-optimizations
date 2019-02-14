@@ -10,17 +10,17 @@ use Composer\Cache as BaseCache;
  */
 class Cache extends BaseCache
 {
-    private static $lowestTags = [
+    protected static $lowestTags = [
         'symfony/symfony' => 'v3.4.0',
     ];
 
     public function read($file)
     {
-        $content = parent::read($file);
+        $content = $this->readFile($file);
         if (!\is_array($data = json_decode($content, true))) {
             return $content;
         }
-        foreach (array_keys(self::$lowestTags) as $key) {
+        foreach (array_keys(static::$lowestTags) as $key) {
             list($provider, ) = explode('/', $key, 2);
             if (0 === strpos($file, "provider-$provider\$")) {
                 $data = $this->removeLegacyTags($data);
@@ -28,6 +28,11 @@ class Cache extends BaseCache
             }
         }
         return json_encode($data);
+    }
+
+    protected function readFile($file)
+    {
+        return parent::read($file);
     }
 
     public function removeLegacyTags(array $data)
