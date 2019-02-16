@@ -6,14 +6,15 @@ Optimize Composer for Drupal projects
 
 # About
 
-This composer-plugin contains set of improvements that makes running `composer update` on your Drupal project
-significantly faster.
+This composer-plugin contains set of improvements that makes running heavy duty composer commands (i.e. `composer update` or `composer require`) much faster.
 
 # Installation
 
 ```bash
 composer require zaporylie/composer-drupal-optimizations:^1.0
 ```
+
+No configuration required 🎊
 
 # Optimizations
 

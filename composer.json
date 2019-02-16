@@ -3,9 +3,6 @@
     "description": "Composer plugin to improve composer performance for Drupal projects",
     "type": "composer-plugin",
     "license": "GPL-2.0-or-later",
-    "require-dev": {
-        "composer/composer": "^1.6"
-    },
     "authors": [
         {
             "name": "Jakub Piasecki",
@@ -14,6 +11,10 @@
     ],
     "require": {
         "composer-plugin-api": "^1.1"
+    },
+    "require-dev": {
+        "composer/composer": "^1.6",
+        "phpunit/phpunit": "^6"
     },
     "autoload": {
         "psr-4": {
