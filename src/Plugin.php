@@ -29,7 +29,7 @@ class Plugin implements PluginInterface
                     'symfony/symfony' => '>3.4',
                 ];
                 if ($io->isVerbose()) {
-                    $io->write('Require tags were not explicitly set so the zaporylie/composer-drupal-optimizations set default based on project\'s composer.json content.');
+                    $io->write('Required tags were not explicitly set so the zaporylie/composer-drupal-optimizations set default based on project\'s composer.json content.');
                 }
             }
         }
