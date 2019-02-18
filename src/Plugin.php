@@ -18,24 +18,24 @@ class Plugin implements PluginInterface
         // Set default version constraints based on the composer requirements.
         $extra = $composer->getPackage()->getExtra();
         $packages = $composer->getPackage()->getRequires();
-        if (empty($extra['composer-drupal-optimizations']['legacy']) && isset($packages['drupal/core'])) {
+        if (empty($extra['composer-drupal-optimizations']['require']) && isset($packages['drupal/core'])) {
             for ($i = 0; $i < 10; $i++) {
                 if (Semver::satisfies(sprintf("8.%d", $i), $packages['drupal/core']->getConstraint()->getPrettyString())) {
                     break;
                 }
             }
             if ($i >= 5) {
-                $extra['composer-drupal-optimizations']['legacy'] = [
-                    'symfony/symfony' => '<3.4',
+                $extra['composer-drupal-optimizations']['require'] = [
+                    'symfony/symfony' => '>3.4',
                 ];
                 if ($io->isVerbose()) {
-                    $io->write('Legacy tags were not explicitly set so the zaporylie/composer-drupal-optimizations set default based on project\'s composer.json content.');
+                    $io->write('Require tags were not explicitly set so the zaporylie/composer-drupal-optimizations set default based on project\'s composer.json content.');
                 }
             }
         }
-        if (!empty($extra['composer-drupal-optimizations']['legacy']) && $io->isVeryVerbose()) {
-            foreach ($extra['composer-drupal-optimizations']['legacy'] as $package => $version) {
-                $io->write(sprintf('extra.commerce-drupal-optimizations.legacy.%s: \'%s\'', $package, $version));
+        if (!empty($extra['composer-drupal-optimizations']['require']) && $io->isVeryVerbose()) {
+            foreach ($extra['composer-drupal-optimizations']['require'] as $package => $version) {
+                $io->write(sprintf('extra.commerce-drupal-optimizations.require.%s: \'%s\'', $package, $version));
             }
         }
 
@@ -48,8 +48,8 @@ class Plugin implements PluginInterface
             $i = 0;
             foreach (RepositoryFactory::defaultRepos(null, $this->config, $manager) as $repo) {
                 $manager->repositories[$i++] = $repo;
-                if ($repo instanceof TruncatedComposerRepository && isset($extra['composer-drupal-optimizations']['legacy'])) {
-                  $repo->setLegacyVersionConstraints($extra['composer-drupal-optimizations']['legacy']);
+                if ($repo instanceof TruncatedComposerRepository && isset($extra['composer-drupal-optimizations']['require'])) {
+                  $repo->setRequiredVersionConstraints($extra['composer-drupal-optimizations']['require']);
                 }
             }
             $manager->setLocalRepository($this->getLocalRepository());

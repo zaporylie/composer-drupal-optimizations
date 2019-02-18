@@ -3,10 +3,8 @@
 namespace zaporylie\ComposerDrupalOptimizations;
 
 use Composer\Cache as BaseCache;
-use Composer\IO\IOInterface;
 use Composer\Semver\Constraint\Constraint;
 use Composer\Semver\VersionParser;
-use Composer\Util\Filesystem;
 
 /**
  * Class Cache
@@ -24,11 +22,6 @@ class Cache extends BaseCache
      * @var \Composer\Semver\VersionParser
      */
     protected $versionParser;
-
-    public function __construct(IOInterface $io, $cacheDir, $whitelist = 'a-z0-9.', Filesystem $filesystem = null) {
-        parent::__construct($io, $cacheDir, $whitelist, $filesystem);
-        $this->versionParser = new VersionParser();
-    }
 
     /**
      * {@inheritdoc}
@@ -84,8 +77,9 @@ class Cache extends BaseCache
                 } else {
                     $normalizedVersion = $composerJson['version_normalized'];
                 }
-                if (!$this->versionParser->parseConstraints($packageVersionConstraint)->matches(new Constraint('==',
-                  $normalizedVersion))) {
+                $packageConstraint = $this->versionParser->parseConstraints($packageVersionConstraint);
+                $versionConstraint = new Constraint('==', $normalizedVersion);
+                if ($packageConstraint->matches($versionConstraint)) {
                     $packages += isset($composerJson['replace']) ? $composerJson['replace'] : [];
                 } else {
                     unset($specificPackage[$version]);
@@ -105,8 +99,9 @@ class Cache extends BaseCache
                 }
                 $devMaster = $versions['dev-master'];
                 $versions = array_intersect_key($versions, $specificPackage);
-                if (!$this->versionParser->parseConstraints($packageVersionConstraint)->matches(new Constraint('==',
-                  $this->versionParser->normalize($devMasterAlias)))) {
+                $packageConstraint = $this->versionParser->parseConstraints($packageVersionConstraint);
+                $versionConstraint = new Constraint('==', $this->versionParser->normalize($devMasterAlias));
+                if ($packageConstraint->matches($versionConstraint)) {
                     $versions['dev-master'] = $devMaster;
                 }
                 if ($versions) {
@@ -123,9 +118,10 @@ class Cache extends BaseCache
      *
      * @return $this
      */
-    public function setLegacyVersionConstraints(array $packages) {
-      $this->packages = $packages;
-      return $this;
+    public function setRequiredVersionConstraints(array $packages) {
+        $this->versionParser = new VersionParser();
+        $this->packages = $packages;
+        return $this;
     }
 
 }
