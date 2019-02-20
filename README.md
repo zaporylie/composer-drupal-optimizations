@@ -1,4 +1,4 @@
-Optimize Composer for Drupal 8.5+ projects
+Optimize Composer for Drupal projects
 ====
 [![Build Status](https://travis-ci.org/zaporylie/composer-drupal-optimizations.svg?branch=master)](https://travis-ci.org/zaporylie/composer-drupal-optimizations)
 ![Packagist](https://img.shields.io/packagist/v/zaporylie/composer-drupal-optimizations.svg)
@@ -18,9 +18,7 @@ No configuration required 🎊
 
 # Optimizations
 
-- Reduce memory usage and CPU usage by removing legacy symfony tags (see also https://github.com/symfony/flex/pull/378) 
-
-(only one at the moment)
+- Reduce memory usage and CPU usage by removing legacy symfony tags
 
 # Benchmark
 
@@ -29,14 +27,40 @@ Following numbers are for clean https://github.com/drupal-composer/drupal-projec
 Before:
 
 ```
-Memory usage: 304.16MB (peak: 876.79MB), time: 17.13s
+Memory usage: 323.19MB (peak: 1121.09MB), time: 13.68s
 ```
 
 After:
 
 ```
-Memory usage: 218.72MB (peak: 250.44MB), time: 4.83s
+Memory usage: 238.66MB (peak: 297.17MB), time: 4.84s
 ```
+
+> php 7.2, macOS High Sierra, i7, 16GB RAM
+
+# Configuration
+
+If no configuration is provided this package will provide sensible defaults based on the content of project's composer.json
+file. Default configuration should cover 99% of the cases. However, in case you want to manually specify the tags
+that should be filtered out you are welcome to use the `extra` section:
+
+```json
+{
+  "extra": {
+    "composer-drupal-optimizations": {
+      "require": {
+        "symfony/symfony": ">3.4"
+      }
+    }
+  }
+}
+```
+
+***Recommendation note:***
+Use defaults (skip config above) if possible - this package will be maintained throughout the Drupal's lifecycle in order
+to optimize legacy constraints in parallel with Drupal's requirements.
+
+All you have to do is to make sure your drupal core constraint is set to `drupal/core: ^8.5` or above.
 
 # Credits
 
