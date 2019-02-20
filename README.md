@@ -1,7 +1,7 @@
 Optimize Composer for Drupal projects
 ====
 [![Build Status](https://travis-ci.org/zaporylie/composer-drupal-optimizations.svg?branch=master)](https://travis-ci.org/zaporylie/composer-drupal-optimizations)
-![Packagist](https://img.shields.io/packagist/v/zaporylie/composer-drupal-optimizations.svg)
+[![Packagist](https://img.shields.io/packagist/v/zaporylie/composer-drupal-optimizations.svg)](https://packagist.org/packages/zaporylie/composer-drupal-optimizations)
 
 
 # About
@@ -11,7 +11,7 @@ This composer-plugin contains set of improvements that makes running heavy duty 
 # Installation
 
 ```bash
-composer require zaporylie/composer-drupal-optimizations:^1.0
+composer require zaporylie/composer-drupal-optimizations:^1.1
 ```
 
 No configuration required 🎊
