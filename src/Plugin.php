@@ -8,7 +8,8 @@ use Composer\IO\IOInterface;
 use Composer\Plugin\PluginInterface;
 use Composer\Repository\RepositoryFactory;
 use Composer\Repository\RepositoryManager;
-use Composer\Semver\Semver;
+use Composer\Semver\Constraint\Constraint;
+use Composer\Semver\Constraint\ConstraintInterface;
 
 class Plugin implements PluginInterface
 {
@@ -18,22 +19,14 @@ class Plugin implements PluginInterface
         // Set default version constraints based on the composer requirements.
         $extra = $composer->getPackage()->getExtra();
         $packages = $composer->getPackage()->getRequires();
-        if (empty($extra['composer-drupal-optimizations']['require']) && isset($packages['drupal/core'])) {
-            for ($i = 0; $i < 10; $i++) {
-                if (Semver::satisfies(sprintf("8.%d", $i), $packages['drupal/core']->getConstraint()->getPrettyString())) {
-                    break;
-                }
-            }
-            if ($i >= 5) {
-                $extra['composer-drupal-optimizations']['require'] = [
-                    'symfony/symfony' => '>3.4',
-                ];
-                if ($io->isVerbose()) {
-                    $io->write('Required tags were not explicitly set so the zaporylie/composer-drupal-optimizations set default based on project\'s composer.json content.');
-                }
+        if (!isset($extra['composer-drupal-optimizations']['require']) && isset($packages['drupal/core'])) {
+            $coreConstraint = $packages['drupal/core']->getConstraint();
+            $extra['composer-drupal-optimizations']['require'] = static::getDefaultRequire($coreConstraint);
+            if (!empty($extra['composer-drupal-optimizations']['require']) && $io->isVerbose()) {
+                $io->write('Required tags were not explicitly set so the zaporylie/composer-drupal-optimizations set default based on project\'s composer.json content.');
             }
         }
-        if (!empty($extra['composer-drupal-optimizations']['require']) && $io->isVeryVerbose()) {
+        if (!empty($extra['composer-drupal-optimizations']['require']) && $io->isVerbose()) {
             foreach ($extra['composer-drupal-optimizations']['require'] as $package => $version) {
                 $io->write(sprintf('extra.commerce-drupal-optimizations.require.%s: \'%s\'', $package, $version));
             }
@@ -48,7 +41,7 @@ class Plugin implements PluginInterface
             $i = 0;
             foreach (RepositoryFactory::defaultRepos(null, $this->config, $manager) as $repo) {
                 $manager->repositories[$i++] = $repo;
-                if ($repo instanceof TruncatedComposerRepository && isset($extra['composer-drupal-optimizations']['require'])) {
+                if ($repo instanceof TruncatedComposerRepository && !empty($extra['composer-drupal-optimizations']['require'])) {
                   $repo->setRequiredVersionConstraints($extra['composer-drupal-optimizations']['require']);
                 }
             }
@@ -56,5 +49,23 @@ class Plugin implements PluginInterface
         }, $composer->getRepositoryManager(), RepositoryManager::class);
         $setRepositories($manager);
         $composer->setRepositoryManager($manager);
+    }
+
+    /**
+     * Negotiates default require constraint and package for given drupal/core.
+     *
+     * @param \Composer\Semver\Constraint\ConstraintInterface
+     *
+     * @return array
+     */
+    static public function getDefaultRequire(ConstraintInterface $coreConstraint)
+    {
+        if ((new Constraint('>=', '8.5.0'))->matches($coreConstraint)
+          && !(new Constraint('<', '8.5.0'))->matches($coreConstraint)) {
+            return [
+              'symfony/symfony' => '>3.4',
+            ];
+        }
+        return [];
     }
 }
