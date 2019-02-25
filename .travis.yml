@@ -42,6 +42,7 @@ script:
   - if [[ $RELEASE = dev ]]; then composer --verbose require --no-update drupal/core:8.6.x-dev; fi;
   - if [[ $RELEASE = dev ]]; then composer --verbose update; fi;
   # Check the performance.
-  - composer update nothing --profile
+  - MEMORY_PEAK="$(composer update nothing --profile 2>&1 | awk '/Memory usage:/{print $6}' | sed 's/MB),//')"
+  - echo ${MEMORY_PEAK}
   - composer config repositories.local path "../composer-drupal-optimizations" && composer require zaporylie/composer-drupal-optimizations:@dev
   - composer update nothing --profile
