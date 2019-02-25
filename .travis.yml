@@ -42,7 +42,7 @@ script:
   - if [[ $RELEASE = dev ]]; then composer --verbose require --no-update drupal/core:8.6.x-dev; fi;
   - if [[ $RELEASE = dev ]]; then composer --verbose update; fi;
   # Check the performance.
-  - MEMORY_PEAK="$(composer update nothing --profile 2>&1 | awk '/Memory usage:/{print $6}' | sed 's/MB),//')"
-  - echo ${MEMORY_PEAK}
+  - MEMORY_PEAK="$(composer update nothing --profile 2>&1 | awk '/Memory usage:/{print $6}' | sed 's/MiB),//')"
   - composer config repositories.local path "../composer-drupal-optimizations" && composer require zaporylie/composer-drupal-optimizations:@dev
-  - composer update nothing --profile
+  - MEMORY_PEAK_PLUGIN="$(composer update nothing --profile 2>&1 | awk '/Memory usage:/{print $6}' | sed 's/MiB),//')"
+  - echo "Memory usage:\nwithout plugin - ${MEMORY_PEAK}\nwith plugin - ${MEMORY_PEAK_PLUGIN}"
