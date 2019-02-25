@@ -45,5 +45,5 @@ script:
   - MEMORY_PEAK="$(composer update nothing --profile 2>&1 | awk '/Memory usage:/{print $6}' | sed 's/MiB),//')"
   - composer config repositories.local path "../composer-drupal-optimizations" && composer require zaporylie/composer-drupal-optimizations:@dev
   - MEMORY_PEAK_PLUGIN="$(composer update nothing --profile 2>&1 | awk '/Memory usage:/{print $6}' | sed 's/MiB),//')"
-  - printf "Memory usage: \n without plugin - ${MEMORY_PEAK} \n with plugin - ${MEMORY_PEAK_PLUGIN}"
-  - if (( $(echo "$MEMORY_PEAK_PLUGIN >= $MEMORY_PEAK" | bc -l )); then exit 1; else echo "Plugin works!"; fi;
+  - printf "Memory usage:\n without plugin - ${MEMORY_PEAK}\n with plugin - ${MEMORY_PEAK_PLUGIN}"
+  - if (( $(echo "$MEMORY_PEAK_PLUGIN >= $MEMORY_PEAK" | bc -l )); then exit 1; fi;
