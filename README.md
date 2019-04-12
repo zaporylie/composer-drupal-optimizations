@@ -6,7 +6,7 @@ Optimize Composer for Drupal projects
 
 # About
 
-This composer-plugin contains set of improvements that makes running heavy duty composer commands (i.e. `composer update` or `composer require`) much faster.
+This composer-plugin contains a set of improvements that makes running heavy duty composer commands (i.e. `composer update` or `composer require`) much faster.
 
 # Installation
 
@@ -40,7 +40,7 @@ Memory usage: 238.66MB (peak: 297.17MB), time: 4.84s
 
 # Configuration
 
-If no configuration is provided this package will provide sensible defaults based on the content of project's composer.json
+If no configuration is provided this package will provide sensible defaults based on the `drupal/core` version constraint in the root composer.json
 file. Default configuration should cover 99% of the cases. However, in case you want to manually specify the tags
 that should be filtered out you are welcome to use the `extra` section:
 
@@ -60,7 +60,7 @@ that should be filtered out you are welcome to use the `extra` section:
 Use defaults (skip config above) if possible - this package will be maintained throughout the Drupal's lifecycle in order
 to optimize legacy constraints in parallel with Drupal's requirements.
 
-All you have to do is to make sure your drupal core constraint is set to `drupal/core: ^8.5` or above.
+All you have to do is to make sure your drupal core constraint in the root composer.json is set to `drupal/core: ^8.5` or above. If you use a Drupal distribution, be sure to explicitly require `drupal/core` in your own project as well.
 
 # Credits
 
