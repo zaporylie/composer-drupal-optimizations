@@ -11,7 +11,7 @@ This composer-plugin contains a set of improvements that makes running heavy dut
 # Installation
 
 ```bash
-composer require zaporylie/composer-drupal-optimizations:^1.1
+composer require zaporylie/composer-drupal-optimizations:^1.1 --dev
 ```
 
 No configuration required 🎊
