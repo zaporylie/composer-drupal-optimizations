@@ -19,11 +19,14 @@ class Plugin implements PluginInterface
         // Set default version constraints based on the composer requirements.
         $extra = $composer->getPackage()->getExtra();
         $packages = $composer->getPackage()->getRequires();
-        if (!isset($extra['composer-drupal-optimizations']['require']) && isset($packages['drupal/core'])) {
-            $coreConstraint = $packages['drupal/core']->getConstraint();
-            $extra['composer-drupal-optimizations']['require'] = static::getDefaultRequire($coreConstraint);
-            if (!empty($extra['composer-drupal-optimizations']['require']) && $io->isVerbose()) {
-                $io->write('Required tags were not explicitly set so the zaporylie/composer-drupal-optimizations set default based on project\'s composer.json content.');
+        if (!isset($extra['composer-drupal-optimizations']['require'])) {
+            $package = isset($packages['drupal/core']) ? $packages['drupal/core'] : (isset($packages['drupal/core-recommended']) ? $packages['drupal/core-recommended'] : null);
+            if (isset($package)) {
+                $coreConstraint = $package->getConstraint();
+                $extra['composer-drupal-optimizations']['require'] = static::getDefaultRequire($coreConstraint);
+                if (!empty($extra['composer-drupal-optimizations']['require']) && $io->isVerbose()) {
+                  $io->write('Required tags were not explicitly set so the zaporylie/composer-drupal-optimizations set default based on project\'s composer.json content.');
+                }
             }
         }
         if (!empty($extra['composer-drupal-optimizations']['require']) && $io->isVerbose()) {
