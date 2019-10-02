@@ -20,7 +20,7 @@ class Plugin implements PluginInterface
         $extra = $composer->getPackage()->getExtra();
         $packages = $composer->getPackage()->getRequires();
         if (!isset($extra['composer-drupal-optimizations']['require'])) {
-            $package = isset($packages['drupal/core']) ? $packages['drupal/core'] : isset($packages['drupal/core-recommended']) ? $packages['drupal/core-recommended'] : null;
+            $package = isset($packages['drupal/core']) ? $packages['drupal/core'] : (isset($packages['drupal/core-recommended']) ? $packages['drupal/core-recommended'] : null);
             if (isset($package)) {
                 $coreConstraint = $package->getConstraint();
                 $extra['composer-drupal-optimizations']['require'] = static::getDefaultRequire($coreConstraint);
