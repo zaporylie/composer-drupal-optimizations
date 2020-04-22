@@ -54,6 +54,14 @@ class Plugin implements PluginInterface
         $composer->setRepositoryManager($manager);
     }
 
+    public function deactivate(Composer $composer, IOInterface $io)
+    {
+    }
+
+    public function uninstall(Composer $composer, IOInterface $io)
+    {
+    }
+
     /**
      * Negotiates default require constraint and package for given drupal/core.
      *
