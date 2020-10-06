@@ -20,11 +20,17 @@ env:
 matrix:
   exclude:
     - php: 7.0
-      env: RELEASE=^9
+      env: RELEASE=^9 COMPOSER_CHANNEL=stable
     - php: 7.1
-      env: RELEASE=^9
+      env: RELEASE=^9 COMPOSER_CHANNEL=stable
     - php: 7.2
-      env: RELEASE=^9
+      env: RELEASE=^9 COMPOSER_CHANNEL=stable
+    - php: 7.0
+      env: RELEASE=^9 COMPOSER_CHANNEL=snapshot
+    - php: 7.1
+      env: RELEASE=^9 COMPOSER_CHANNEL=snapshot
+    - php: 7.2
+      env: RELEASE=^9 COMPOSER_CHANNEL=snapshot
 
 before_install:
   - composer --verbose self-update --$COMPOSER_CHANNEL
