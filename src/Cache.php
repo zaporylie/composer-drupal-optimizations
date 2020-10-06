@@ -72,7 +72,7 @@ class Cache extends BaseCache
             $packages = [];
             $specificPackage = $data['packages'][$packageName];
             foreach ($specificPackage as $version => $composerJson) {
-                if ('dev-master' === $version) {
+                if ('dev-master' === $version && isset($composerJson['extra'])) {
                     $normalizedVersion = $this->versionParser->normalize($composerJson['extra']['branch-alias']['dev-master']);
                 } else {
                     $normalizedVersion = $composerJson['version_normalized'];
