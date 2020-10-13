@@ -8,6 +8,8 @@ Optimize Composer for Drupal projects
 
 This composer-plugin contains a set of improvements that makes running heavy duty composer commands (i.e. `composer update` or `composer require`) much faster.
 
+Probably not needed for Composer 2, since it is quite fast by default.
+
 # Installation
 
 ```bash
