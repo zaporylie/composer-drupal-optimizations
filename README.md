@@ -8,6 +8,9 @@ Optimize Composer for Drupal projects
 
 This composer-plugin contains a set of improvements that makes running heavy duty composer commands (i.e. `composer update` or `composer require`) much faster.
 
+### Composer 2
+Since Composer 2 is quite fast by default, this plugin is not needed, and will be disabled if Composer 2 is detected. If everyone involved in development of a project is using Composer 2, this plugin becomes redundant and can be removed from the list of project dependencies.
+
 # Installation
 
 ```bash
